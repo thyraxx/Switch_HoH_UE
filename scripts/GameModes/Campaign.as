@@ -354,6 +354,7 @@ class Campaign : BaseGameMode
 		if (m_savedMerc == 3)
 		{
 			print("Mercenary save stage 2");
+			Lobby::FullyJoinedLobby();
 			return;
 		}
 		m_savedMerc++;

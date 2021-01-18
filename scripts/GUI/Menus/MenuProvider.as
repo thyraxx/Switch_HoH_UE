@@ -76,6 +76,16 @@ class MenuProvider
 		}
 	}
 
+	void UpdateBlit()
+	{
+		Menu::Menu@ curr = GetCurrentMenu();
+		if (curr.m_closing)
+		{
+			m_menus.removeAt(m_menus.length() - 1);
+			GetCurrentMenu().SetActive();
+		}
+	}
+
 	void Render(int idt, SpriteBatch& sb)
 	{
 		if (m_backdrop !is null)

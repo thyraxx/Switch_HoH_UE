@@ -2485,8 +2485,11 @@
 		<string name="name">pets-gold-collected</string>
 		
 		<string name="achievement">pet_gold</string>
+%if CONSOLE
+		<int name="achievement-limit">100000</int>
+%else
 		<int name="achievement-limit">1000000</int>
-		
+%endif		
 		<array name="rewards">
 			<dict>
 				<long name="value">100000</long>

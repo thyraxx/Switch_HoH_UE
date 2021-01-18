@@ -131,27 +131,6 @@ namespace Menu
 				auto gm = cast<MainMenu>(g_gameMode);
 				gm.SetMainMenuBlit();
 			}
-%if TARGET_XB1
-			else if (name == "notmainuser yes")
-			{
-				Blit::SignIn();
-			}
-			else if (name == "notmainuser no")
-			{
-				StopScenario();
-				Blit::ResetEngagement();
-			}
-			else if (name == "notmainuser cancel")
-			{
-				// TODO ? 
-				// Not main user window when B is pressed
-				Blit::SignIn();
-			}
-			else if(name == "disconnectedcontroller")
-			{
-				Blit::AcceptController();
-			}
-%endif
 		}
 	}
 }

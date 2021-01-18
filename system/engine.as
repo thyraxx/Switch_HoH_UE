@@ -373,6 +373,7 @@ namespace Lobby
 	void SetGemState(GemState state) { }
 	array<PlayerLoadState>@ GetPlayerLoadStates() { return null; }
 	void GoldCheck() { }
+	void FullyJoinedLobby() { }
 }
 
 enum TextInputControlEventType

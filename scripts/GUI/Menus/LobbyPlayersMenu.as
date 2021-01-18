@@ -74,7 +74,7 @@ namespace Menu
 
 			for (int i = 0; i < 4; i++)
 			{
-				if(!HwrSaves::PeerHasSave(i))
+				if(!HwrSaves::PeerHasSave(i) || !Lobby::HasFullyJoinedLobby(i))
 					continue;
 				
 				auto wPlayer = m_wPlayerTemplate.Clone();

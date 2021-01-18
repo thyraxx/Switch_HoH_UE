@@ -1169,6 +1169,20 @@ class PlayerRecord
 					Platform::Service.UnlockAchievement("level20_" + charClass);
 				if (level >= 40)
 					Platform::Service.UnlockAchievement("level40_" + charClass);
+
+%if CONSOLE
+				auto arrCharacters = HwrSaves::GetCharacters();
+				for (uint i = 0; i < arrCharacters.length(); i++)
+				{
+					auto svChar = arrCharacters[i];
+
+					int level = GetParamInt(UnitPtr(), svChar, "level");
+					string charClass = GetParamString(UnitPtr(), svChar, "class");
+
+					if (level >= 20)
+						Platform::Service.UnlockAchievement("level20_" + charClass);
+				}
+%endif
 			}
 		}
 	}

@@ -455,7 +455,9 @@ class HUD : IWidgetHoster
 		DrawUseIcon(sb, drawnPlayerBars ? 22 : 14);
 
 		m_speechBubbles.Draw(sb, idt);
-
+%if TARGET_XB1
+		m_wBuffList.overscanMoveForced = m_wSkillGui.overscanMove;
+%endif
 		IWidgetHoster::Draw(sb, idt);
 
 		DrawHoverItem(sb);

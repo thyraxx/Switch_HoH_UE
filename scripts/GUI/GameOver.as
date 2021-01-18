@@ -216,7 +216,7 @@ class GameOver : UserWindow
 		array<string> ret;
 
 		auto stats = record.statisticsSession;
-
+%if !CONSOLE
 		if (g_flags.IsSet("unlock_apothecary"))
 		{
 			// "You never used your potion!"
@@ -231,7 +231,7 @@ class GameOver : UserWindow
 			else if (unusedPotions > 0)
 				ret.insertLast(Resources::GetString(".gameover.sentence.unused-potion.plural", { { "num", unusedPotions } }));
 		}
-
+%endif
 		// "X keys remain unused."
 		int unusedKeys = 0;
 		for (uint i = 0; i < record.keys.length(); i++)

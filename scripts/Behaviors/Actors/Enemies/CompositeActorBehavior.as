@@ -138,8 +138,11 @@ class CompositeActorBehaviorCached : UnitProductionCache::IBase
 		m_unitHeight = GetParamInt(unit, params, "unit-height", false, 16);
 
 		m_aggroRange = GetParamInt(unit, params, "aggro-range", false, 200);
+%if CONSOLE
+		m_maxRange = uint(max(m_aggroRange, GetParamInt(unit, params, "max-range", false, 325)));
+%else
 		m_maxRange = uint(max(m_aggroRange, GetParamInt(unit, params, "max-range", false, 300)));
-
+%endif
 		m_canHeal = GetParamBool(unit, params, "can-heal", false, true);
 		m_bestiaryOverride = GetParamString(unit, params, "beastiary-override", false);
 		

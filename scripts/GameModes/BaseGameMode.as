@@ -351,9 +351,9 @@ class BaseGameMode : AGameMode
 		AddVar("ui_scale", 1.0, SetUIScaleCVar);
 		AddVar("ui_show_mp_mana", true);
 
-		AddVar("ui_txt_enemy_hurt_husk","aa9000"); //Blit default value
-		AddVar("ui_txt_enemy_hurt_local","ffd800"); //Blit default value
-		AddVar("ui_txt", true); //Blit default value
+		AddVar("ui_txt_enemy_hurt_husk","aa9000", UpdateFloatingTextColorsCFuncS); //Blit default value
+		AddVar("ui_txt_enemy_hurt_local","ffd800", UpdateFloatingTextColorsCFuncS); //Blit default value
+		AddVar("ui_txt", true, UpdateFloatingTextColorsCFuncB); //Blit default value
 		
 		AddVar("ui_tooltip_pretty", true);
 
@@ -431,6 +431,36 @@ class BaseGameMode : AGameMode
 				ret++;
 		}
 		return ret;
+	}
+
+	void ShowXBODialog(string question) override
+	{
+		if (m_dialogXBOWindow is null)
+			@m_dialogXBOWindow = DialogXBOWindow(m_guiBuilder);
+
+		m_dialogXBOWindow.SetQuestion(question);
+		m_dialogXBOWindow.m_visible = true;
+		g_showingXBOMessage = true;
+	}
+
+	void CloseXBODialog() override
+	{
+		if (m_dialogXBOWindow !is null)
+			m_dialogXBOWindow.Close();
+
+		g_showingXBOMessage = false;
+	}
+
+	void CloseDialogBlit() override
+	{
+		if (m_dialogWindow !is null)
+		{
+			if(m_dialogWindow.m_visible)
+			{
+				m_dialogWindow.m_result = "__invalid__";
+				m_dialogWindow.Close();
+			}
+		}
 	}
 
 	void ShowDialog(string id, string question, string buttonYes, string buttonNo, IWidgetHoster@ returnHost) override
@@ -1751,6 +1781,9 @@ class BaseGameMode : AGameMode
 
 		if (m_dialogWindow !is null)
 			m_dialogWindow.Draw(sb, idt);
+
+		if (m_dialogXBOWindow !is null)
+			m_dialogXBOWindow.Draw(sb, idt);
 /*
 		if(m_widgetUnderCursor !is null && !m_widgetUnderCursor.m_invalidated)
 		{
@@ -2385,18 +2418,5 @@ class BaseGameMode : AGameMode
 	bool ToggleGuildHall(bool showMenu)
 	{
 		return false;
-	}
-	
-	bool Engage(bool)
-	{
-		auto topdialog = cast<DialogWindow>(m_widgetRoots[m_widgetRoots.length() - 1]);
-		if(topdialog !is null)
-		{
-			if(topdialog.m_id == "disconnectedcontroller")
-			{
-				topdialog.Close();
-			}
-		}
-		return true;
 	}
 }

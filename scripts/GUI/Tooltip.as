@@ -194,7 +194,7 @@ class Tooltip
 
 	void Draw(SpriteBatch& sb, vec2 pos)
 	{
-		if (m_text is null || !m_toggled)
+		if (m_text is null || !m_toggled || g_showingXBOMessage)
 			return;
 
 		//pos.x = int(pos.x);
@@ -316,7 +316,7 @@ class Tooltip
 
 	void Draw(SpriteBatch& sb, Rect@ rect)
 	{
-		if (m_text is null || !m_toggled)
+		if (m_text is null || !m_toggled || g_showingXBOMessage)
 			return;
 
 		//pos.x = int(pos.x);

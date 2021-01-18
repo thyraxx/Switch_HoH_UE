@@ -50,6 +50,9 @@ namespace Stats
 		string m_achievement;
 		int64 m_achievementLimit;
 
+		int m_globalAchievId = -1;
+		int last_percent = 0;
+
 		Stat(SValue@ params)
 		{
 			m_name = GetParamString(UnitPtr(), params, "name");
@@ -163,16 +166,40 @@ namespace Stats
 
 			m_valueInt += value;
 
+			if(m_globalAchievId != -1)
+			{
+				g_achievStats[m_globalAchievId] += value;
+			}
+
 			if (checkAwards)
 			{
 				for (uint i = 0; i < m_accomplishments.length(); i++)
 					m_accomplishments[i].OnUpdated();
+			}
+			if (checkAwards || m_globalAchievId != -1)
+			{
+%if CONSOLE
+				if(m_globalAchievId != -1 && m_achievementLimit > 0)// && g_achievStats[m_globalAchievId] >= m_achievementLimit)
+				{
+					int percent = (g_achievStats[m_globalAchievId] * 100) / m_achievementLimit;
 					
+					if(percent > last_percent)
+					{
+						Platform::Service.UnlockAchievement(m_achievement, percent);
+						last_percent = percent;
+					}
+					if(percent >= 100)
+						m_achievementLimit = 0;
+				}
+				else
+%endif
 				if (m_achievementLimit > 0 && m_valueInt >= m_achievementLimit)
 				{
 					Platform::Service.UnlockAchievement(m_achievement);
 					m_achievementLimit = 0;
 				}
+
+
 			}
 
 			UpdateCounter();
@@ -251,6 +278,61 @@ namespace Stats
 				}
 				else
 					m_valueInt = svStat.GetLong();
+
+				if(g_initStatistics && m_achievementLimit > 0)
+				{
+					//set achiev id
+					if(m_achievement == "magic_anvil_crafting")
+					{
+						m_globalAchievId = 0;
+					}
+					else if(m_achievement == "magic_anvil_attunement")
+					{
+						m_globalAchievId = 1;
+					}
+					else if(m_achievement == "find_secrets")
+					{
+						m_globalAchievId = 2;
+					}
+					else if(m_achievement == "kill_beasts")
+					{
+						m_globalAchievId = 3;
+					}
+					else if(m_achievement == "kill_aberrations")
+					{
+						m_globalAchievId = 4;
+					}
+					else if(m_achievement == "kill_constructs")
+					{
+						m_globalAchievId = 5;
+					}
+					//else if(m_achievement == "combo_killer")
+					//{
+					//	m_globalAchievId = 6; //not cumulative!!
+					//}
+					else if(m_achievement == "pet_gold")
+					{
+						m_globalAchievId = 7;
+					}
+					else if(m_achievement == "moonshield")
+					{
+						m_globalAchievId = 8;
+					}
+					//else if(m_achievement == "construct_statues")
+					//{
+					//	m_globalAchievId = 9; //per town?
+					//}
+					//else if(m_achievement == "blood_rites")
+					//{
+					//	m_globalAchievId = 10; //per player
+					//}
+					//else if(m_achievement == "beat_arena")
+					//{
+					//	m_globalAchievId = 11; //not cumulative!!
+					//}
+					if(m_globalAchievId != -1)
+						g_achievStats[m_globalAchievId] += m_valueInt;
+				}
 			}
 			else if (m_type == StatType::Average && svStat.GetType() == SValueType::Array)
 			{
@@ -278,8 +360,24 @@ namespace Stats
 				}
 			}
 
-			if (checkAwards)
+			if (checkAwards || m_globalAchievId != -1)
 			{
+%if CONSOLE
+				//TODO: don't check on load on PS4
+				if(m_globalAchievId != -1 && m_achievementLimit > 0)// && g_achievStats[m_globalAchievId] >= m_achievementLimit)
+				{
+					int percent = (g_achievStats[m_globalAchievId] * 100) / m_achievementLimit;
+					
+					if(percent > last_percent)
+					{
+						Platform::Service.UnlockAchievement(m_achievement, percent);
+						last_percent = percent;
+					}
+					if(percent >= 100)
+						m_achievementLimit = 0;
+				}
+				else
+%endif			
 				if (m_achievementLimit > 0 && m_valueInt >= m_achievementLimit)
 				{
 					Platform::Service.UnlockAchievement(m_achievement);

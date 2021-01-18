@@ -564,6 +564,8 @@ class Widget
 				overscanMove.y = 0;
 			}
 		}
+		overscanMove.x = round(overscanMove.x);
+		overscanMove.y = round(overscanMove.y);
 		drawPos += overscanMove;
 %endif
 

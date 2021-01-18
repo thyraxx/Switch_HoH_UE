@@ -117,9 +117,11 @@ namespace Menu
 			{
 				m_menuButtons.m_visible = false;
 				m_engagement.m_visible = true;
-				g_gameMode.m_widgetUnderCursor.SetHovering(false, g_gameMode.m_widgetUnderCursor.GetCenter());
+				if(g_gameMode.m_widgetUnderCursor !is null)
+					g_gameMode.m_widgetUnderCursor.SetHovering(false, g_gameMode.m_widgetUnderCursor.GetCenter());
 				m_engagement.SetHovering(true, m_engagement.GetCenter());
-				
+				m_engagement.m_focusEffect = "blink";
+
 				for (uint i = 0; i < m_arrPopups.length(); i++)
 				{
 					if (m_arrPopups[i] is null)
@@ -127,6 +129,13 @@ namespace Menu
 
 					m_arrPopups[i].m_visible = false;
 				}
+%if TARGET_XB1
+				auto gm = cast<MainMenu>(g_gameMode);
+				if(gm !is null)
+				{
+					gm.m_strGamertag = "";
+				}
+%endif
 			}
 		}
 		
@@ -228,7 +237,7 @@ namespace Menu
 						if(onlineAvailable)
 						{
 							if(i == 0) wButton.SetText("CREATE LOBBY");
-							if(i == 1) wButton.SetText("SERVERLIST");
+							if(i == 1) wButton.SetText("SERVER LIST");
 						}
 						else
 						{
@@ -288,6 +297,18 @@ namespace Menu
 				TogglePopupMenu(m_wPopupOptions);
 				OpenMenu(SwitchOptionsMenu(m_provider),"gui/main_menu/options_switch.gui");
 			}
+			else if (name == "options-signout")
+			{
+				g_gameMode.ShowDialog(
+						"signout",
+						"Do you really want to change your profile?",
+						Resources::GetString(".misc.yes"),
+						Resources::GetString(".misc.no"),
+						this
+					);
+			}
+			else if (name == "signout yes")
+				Blit::ResetEngagement();
 			else if (name == "options-gameplay")
 				OpenMenu(GameOptionsMenu(m_provider), "gui/main_menu/options_game.gui");
 			else if (name == "options-graphics")

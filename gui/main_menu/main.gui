@@ -102,7 +102,7 @@
 %if TARGET_NX
 				<rect id="popup-multiplayer" visible="false" width="112" height="42" anchor="0.5 0.9" offset="-24 -23" flow="vbox" spacing="4">
 %else
-				<rect id="popup-multiplayer" visible="false" width="112" height="42" anchor="0.5 0.9" offset="-24 -23" flow="vbox" spacing="4">
+				<rect id="popup-multiplayer" visible="false" width="112" height="42" anchor="0.5 0.9" offset="-6 -23" flow="vbox" spacing="4">
 %endif
 					<scalebutton spriteset="scalebutton" width="112" font="gui/fonts/arial11.fnt" text="CONNECTING" func="multi-host" />
 					<scalebutton spriteset="scalebutton" width="112" font="gui/fonts/arial11.fnt" text="...." func="multi-serverlist" />
@@ -122,13 +122,20 @@
 					<scalebutton spriteset="scalebutton" width="112" font="gui/fonts/arial11.fnt" text=".menu.credits" func="options-credits" />
 				</rect>
 			-->
+
 %if TARGET_NX
-				<rect id="popup-options" visible="false" width="112" height="42" anchor="0.5 0.9" offset="42 -23" flow="vbox" spacing="4">
+				<rect id="popup-options" visible="false" width="112" height="42" anchor="0.5 0.9" offset="104 -23" flow="vbox" spacing="4">
+%elif TARGET_XB1
+				<rect id="popup-options" visible="false" width="112" height="63" anchor="0.5 0.9" offset="61 -26" flow="vbox" spacing="4">
 %else
-				<rect id="popup-options" visible="false" width="112" height="42" anchor="0.5 0.9" offset="42 -23" flow="vbox" spacing="4">
+				<rect id="popup-options" visible="false" width="112" height="42" anchor="0.5 0.9" offset="61 -23" flow="vbox" spacing="4">
+%endif
+%if TARGET_XB1
+					<scalebutton spriteset="scalebutton" width="112" font="gui/fonts/arial11.fnt" text="CHANGE PROFILE" func="options-signout" />
 %endif
 					<scalebutton spriteset="scalebutton" width="112" font="gui/fonts/arial11.fnt" text="OPTIONS" func="options-blit" />
-					<scalebutton spriteset="scalebutton" width="112" font="gui/fonts/arial11.fnt" text=".menu.credits" func="options-credits" />
+					<scalebutton spriteset="scalebutton" width="112" font="gui/fonts/arial11.fnt" text=".menu.credits" 
+					func="options-credits" />
 				</rect>
 			</group>
 		</group>

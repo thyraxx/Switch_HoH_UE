@@ -482,3 +482,10 @@ EffectParams@ LoadEffectParams(UnitPtr unit, SValue& params)
 	
 	return null;
 }
+
+
+bool g_initStatistics = false;
+
+array<int> g_achievStats;
+
+bool g_showingXBOMessage = false;

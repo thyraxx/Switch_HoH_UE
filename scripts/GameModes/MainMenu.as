@@ -39,13 +39,15 @@ class MainMenu : BaseGameMode
 	bool m_inviteInSession;
 	bool m_joinInSession;
 	bool m_lobbyJoinError;
-%if TARGET_XB1
 	bool m_disconnectedController;
 	bool m_notMainUser;
-
+	bool m_closeXBO;
+%if TARGET_XB1
 	string m_strGamertag;
 	BitmapString@ m_gamertag;
 %endif
+
+	bool firstUpdate = true;
 
 	bool m_errorBadPJ;
 
@@ -186,12 +188,12 @@ class MainMenu : BaseGameMode
 			m_lobbyJoinError = true;
 		else if (message == MenuMessage::LobbyJoinErrorBadPJ)
 			m_errorBadPJ = true;
-%if TARGET_XB1
-		else if  (message == MenuMessage::DisconnectedController)
+		else if (message == MenuMessage::DisconnectedController)
 			m_disconnectedController = true;
-		else if  (message == MenuMessage::NotMainUser)
+		else if (message == MenuMessage::NotMainUser)
 			m_notMainUser = true;
-%endif
+		else if (message == MenuMessage::CloseXBO)
+			m_closeXBO = true;
 	}
 
 	void LoadMenu()
@@ -334,7 +336,11 @@ class MainMenu : BaseGameMode
 	{
 		if (m_state == MenuState::Hidden)
 			return false;
-
+%if CONSOLE		
+		auto joinMenu = cast<Menu::JoiningLobbyMenu>(m_mainMenu.m_menus[m_mainMenu.m_menus.length() - 1]);
+		if(joinMenu !is null)
+				return true;
+%endif
 		if (!BaseGameMode::MenuBack())
 		{
 			if (m_gameMenu is m_ingameMenu)
@@ -348,6 +354,26 @@ class MainMenu : BaseGameMode
 
 	void UpdateFrame(int ms, GameInput& gameInput, MenuInput& menuInput) override
 	{
+		if (m_state == MenuState::MainMenu)
+		{
+			if(firstUpdate)
+			{
+				auto frontMenu = cast<Menu::FrontMenu>(m_gameMenu.GetCurrentMenu());
+				if(frontMenu !is null)
+				{
+					firstUpdate = false;
+					if(Blit::MustEngage() == false)
+					{
+						Engage(true);
+					}
+					else
+					{
+						Platform::Service.ResetAchievements();
+					}
+				}
+			}
+		}
+
 		BaseGameMode::UpdateFrame(ms, gameInput, menuInput);
 
 		Platform::Service.InMenus(true);
@@ -398,19 +424,25 @@ class MainMenu : BaseGameMode
 			m_errorBadPJ = false;
 			ShowDialog("errorBadPJ", "Error joining the lobby. Your character does not match this lobby level or mercenary limitations", Resources::GetString(".menu.ok"), m_gameMenu.GetCurrentMenu());
 		}
-%if TARGET_XB1
+
 		if(m_disconnectedController)
 		{
 			m_disconnectedController = false;
-			ShowDialog("disconnectedcontroller", "The controller has been disconnected. Please connect a controller.", Resources::GetString(".menu.ok"), m_gameMenu.GetCurrentMenu());
+			ShowXBODialog("Reconnect the controller or press A on a new one to continue.\nPress B to exit.");
 		}
 
 		if(m_notMainUser)
 		{
 			m_notMainUser = false;
-			ShowDialog("notmainuser", "This controller does not have the main user assigned. Sign in the main user or go back to the engagement.", "sign in", "go back", m_gameMenu.GetCurrentMenu());
+			ShowXBODialog("You need to be logged in as '" + Blit::GetGamertag() + "' to continue.\nPress A to sign in, or press B to exit.");
 		}
-%endif
+
+		if(m_closeXBO)
+		{
+			m_closeXBO = false;
+			CloseXBODialog();
+		}
+
 		if (m_joinFailed != -1)
 		{
 			string prompt = "join";
@@ -875,24 +907,36 @@ class MainMenu : BaseGameMode
 		m_gameMenu.GetCurrentMenu().OpenMenu(Menu::CharacterSelectionMenu(m_gameMenu, context), "gui/main_menu/character_selection.gui");
 	}
 
-	bool Engage(bool engage = true) override
+	bool Engage(bool engage = true)
 	{
-		BaseGameMode::Engage(engage);
-
 		auto frontMenu = cast<Menu::FrontMenu>(m_gameMenu.GetCurrentMenu());
 		if(frontMenu !is null)
 		{
 			frontMenu.Engage(engage);
 			return true;
 		}
-		/*
-		auto introMenu = cast<Menu::IntroMenu>(m_gameMenu.GetCurrentMenu());
-		if(introMenu !is null)
-		{
-			introMenu.NextLogo();
-		}
-		*/
 		return false;
+	}
+
+	void BackToEngage()
+	{
+		CloseDialogBlit();
+		while(cast<Menu::FrontMenu>(m_gameMenu.GetCurrentMenu()) is null)
+		{
+			m_gameMenu.GetCurrentMenu().Close();
+			m_gameMenu.UpdateBlit();
+		}
+		auto frontMenu = cast<Menu::FrontMenu>(m_gameMenu.GetCurrentMenu());
+		if(frontMenu !is null)
+		{
+			frontMenu.BackToEngagement();
+			firstUpdate = true;
+		}
+	}
+
+	void ForceCloseDialog()
+	{
+		CloseDialogBlit();
 	}
 }
 

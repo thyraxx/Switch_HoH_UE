@@ -16,11 +16,15 @@ class AGameMode
 	Platform::CursorInfo@ m_currCursor;
 	
 	DialogWindow@ m_dialogWindow;
+	DialogXBOWindow@ m_dialogXBOWindow;
 	
 	GUIBuilder m_guiBuilder;
 	
 	float acc = 0.0;
 	
+	void ShowXBODialog(string question) {}
+	void CloseXBODialog() {}
+	void CloseDialogBlit() {}
 	void ShowDialog(string id, string question, string buttonYes, string buttonNo, IWidgetHoster@ returnHost) {}
 	void ShowDialog(string id, string message, string button, IWidgetHoster@ returnHost) {}
 	void ShowInputDialog(string id, string message, IWidgetHoster@ returnHost, string defaultInput = "") {}

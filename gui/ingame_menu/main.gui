@@ -24,7 +24,8 @@
 				<sprite id="logo" src="logo" offset="0 -70" anchor="0.5 0.5" />
 
 				<rect width="270" height="18" anchor="0.5 0.9" offset="-75 0" flow="hbox" spacing="4">
-					<scalebutton visible="false" id="players-list" spriteset="scalebutton" width="64" func="options-players">
+					<scalebutton visible="false" id="players-list" spriteset="scalebutton" width="64" func="options-players"
+					tooltip="Online options">
 						<sprite src="icon-blit-online-opt-2" anchor="0.5 0.5" />
 					</scalebutton>
 					<scalebutton defaultfocus="true" spriteset="scalebutton" width="64" func="resume"
@@ -47,7 +48,7 @@
 						<sprite src="icon-options" anchor="0.5 0.5" />
 					</scalebutton>
 					<scalebutton spriteset="scalebutton" width="64" func="stop"
-					tooltip="Quit">
+					tooltip="Save and Quit">
 						<sprite src="icon-quit" anchor="0.5 0.5" />
 					</scalebutton>
 				</rect>

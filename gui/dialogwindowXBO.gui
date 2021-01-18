@@ -1,0 +1,16 @@
+<gui>
+	<sprites>
+%include "gui/scalablebutton_sprites.inc"
+	</sprites>
+
+	<doc>
+		<group>
+			<rect width="230" height="102" anchor="0.5 0.5" spriteset="gui/variable/bigwindow_borders.sval" border="0 0 0 191" borderwidth="512" bordertype="outer">
+				<!-- Question -->
+				<rect width="226" height="98" offset="2 2" color="#202a26FF" shadow="#0c120fFF" shadowsize="2">
+					<text id="question" smooth="false" font="gui/fonts/arial11.fnt" width="200" align="center" anchor="0.5 0.5" />
+				</rect>
+			</rect>
+		</group>
+	</doc>
+</gui>

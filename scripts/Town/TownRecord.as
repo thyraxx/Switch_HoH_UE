@@ -306,8 +306,10 @@ class TownRecord
 
 		auto gm = cast<Campaign>(g_gameMode);
 		gm.RefreshTownModifiers();
+%if !CONSOLE
+		// in conlole we autsoave after every load (m_savedMerc) and this can cause issues braking the character		
 		gm.SaveLocalTown();
-
+%endif
 		dictionary paramsTitle = { { "title", Resources::GetString(title.m_name) } };
 		auto notif = gm.m_notifications.Add(
 			Resources::GetString(".hud.newtitle.guild", paramsTitle),
@@ -750,12 +752,27 @@ class TownRecord
 		}
 
 		auto dictStatistics = GetParamDictionary(UnitPtr(), sv, "statistics", false);
+%if CONSOLE
+		g_initStatistics = m_statistics.m_checkRewards;
+%endif
+		bool insertElems = g_achievStats.length() == 0;
+
+		for(int i = 0; i < 12; i++)
+		{
+			if(insertElems)
+				g_achievStats.insertLast(0);
+			else
+				g_achievStats[i] = 0;
+		}
+
 		if (dictStatistics !is null)
 			m_statistics.Load(dictStatistics);
 
 		auto dictStatisticsMercenaries = GetParamDictionary(UnitPtr(), sv, "statistics-mercenaries", false);
 		if (dictStatisticsMercenaries !is null)
 			m_statisticsMercenaries.Load(dictStatisticsMercenaries);
+
+		g_initStatistics = false;
 
 		m_reputationPresented = GetParamInt(UnitPtr(), sv, "rep-presented", false, GetReputation());
 

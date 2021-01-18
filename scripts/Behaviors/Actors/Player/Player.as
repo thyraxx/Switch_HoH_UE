@@ -793,7 +793,10 @@ class Player : PlayerBase
 	void OnNewTitle(Titles::Title@ title)
 	{
 		auto gm = cast<Campaign>(g_gameMode);
+%if !CONSOLE
+		// in conlole we autsoave after every load (m_savedMerc) and this can cause issues breaking the character		
 		gm.SavePlayer(m_record);
+%endif
 
 %if HARDCORE
 		switch (int(m_record.titleIndex))
