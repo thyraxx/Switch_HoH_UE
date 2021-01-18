@@ -56,18 +56,23 @@
 
 				<text text="FMOD Studio by Firelight Technologies" anchor="0.5 0" offset="0 30" font="gui/fonts/arial11_bold.fnt" />
 				
-				<text text="PORTING" color="#ff0000" anchor="0.5 0" offset="0 20" font="gui/fonts/code2003_20_bold.fnt" />
+				<text text="PORTING & PUBLISING" color="#ff0000" anchor="0.5 0" offset="0 20" font="gui/fonts/code2003_20_bold.fnt" />
 
 				<text text="Coding" anchor="0.5 0" offset="0 10" font="gui/fonts/arial11_bold.fnt" />
 				<text text="BlitWorks" color ="#ffaf34" anchor="0.5 0" offset="0 10" font="gui/fonts/arial11_bold.fnt" />
 				<text text="Tony Cabello" anchor="0.5 0" font="gui/fonts/arial11.fnt" />
 				<text text="Guillermo García" anchor="0.5 0" font="gui/fonts/arial11.fnt" />
 				<text text="Oscar Serrano" anchor="0.5 0" font="gui/fonts/arial11.fnt" />
-				<text text="Sergi Diaz" anchor="0.5 0" font="gui/fonts/arial11.fnt" />
-				<text text="Mario Gonzalez" anchor="0.5 0" font="gui/fonts/arial11.fnt" />
+				<text text="Sergi Díaz" anchor="0.5 0" font="gui/fonts/arial11.fnt" />
+				<text text="Mario González" anchor="0.5 0" font="gui/fonts/arial11.fnt" />
 				<text text="Victor Hugo Rivero" anchor="0.5 0" font="gui/fonts/arial11.fnt" />
-				<text text="Cesar Sánchez" anchor="0.5 0" font="gui/fonts/arial11.fnt" />
+				<text text="César Sánchez" anchor="0.5 0" font="gui/fonts/arial11.fnt" />
 				<text text="Alejandro Andreu" anchor="0.5 0" font="gui/fonts/arial11.fnt" />
+
+				<text text="Publishing" anchor="0.5 0" offset="0 10" font="gui/fonts/arial11_bold.fnt" />
+				<text text="BlitWorks" color ="#ffaf34" anchor="0.5 0" offset="0 10" font="gui/fonts/arial11_bold.fnt" />
+				<text text="Geraldine Abuliak" anchor="0.5 0" font="gui/fonts/arial11.fnt" />
+				<text text="Jesús Fabre" anchor="0.5 0" font="gui/fonts/arial11.fnt" />
 
 				<text text="QA" anchor="0.5 0" offset="0 10" font="gui/fonts/arial11_bold.fnt" />
 				<text text="Lollipop Robot" color="#774582" anchor="0.5 0" offset="0 10" font="gui/fonts/arial11_bold.fnt" />

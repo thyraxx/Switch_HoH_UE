@@ -27,6 +27,8 @@ namespace GameModeHandler
 		auto fountainMenu = GetFountainMenu();
 		if (fountainMenu !is null)
 			fountainMenu.NetBuy();
+
+		QueuedTasks::Queue(3, RefreshPlayerModifiersTask());
 	}
 
 	void DepositFountain(uint8 peer, int amount)

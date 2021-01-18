@@ -208,7 +208,7 @@ class Campaign : BaseGameMode
 			}
 		}
 
-		Fountain::RefreshModifiers(g_allModifiers);
+		//Fountain::RefreshModifiers(g_allModifiers);
 
 		if (Network::IsServer() && Lobby::IsInLobby())
 		{
@@ -1033,7 +1033,6 @@ class Campaign : BaseGameMode
 		BaseGameMode::SavePlayer(builder, player);
 
 		builder.PushString("name", player.name);
-		builder.PushString("nameCensored", player.nameCensored);
 
 		builder.PushString("class", player.charClass);
 		builder.PushInteger("face", player.face);
@@ -1262,8 +1261,22 @@ class Campaign : BaseGameMode
 		BaseGameMode::LoadPlayer(data, player);
 
 		// Load main stats
-		player.name = GetParamString(UnitPtr(), data, "name", false, player.name);
-		player.nameCensored = GetParamString(UnitPtr(), data, "nameCensored", false, player.nameCensored);
+		string nm = GetParamString(UnitPtr(), data, "name", false, player.name);
+
+		if(!player.local)
+		{
+			if(Lobby::NameAlreadyFiltered(nm))
+				player.name = Lobby::GetCachedFilteredName(nm);
+			else
+			{
+				Lobby::CheckProfanity(nm, player.peer);
+				player.name = "";
+			}
+		}
+		else
+		{
+			player.name = nm;
+		}
 
 		player.charClass = GetParamString(UnitPtr(), data, "class", false, player.charClass);
 		player.face = GetParamInt(UnitPtr(), data, "face", false, player.face);

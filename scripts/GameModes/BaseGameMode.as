@@ -192,6 +192,19 @@ void CvarFormatLetters(bool value)
 	g_cvar_format_letters = value;
 }
 
+class RefreshPlayerModifiersTask : QueuedTasks::QueuedTask
+
+{
+    RefreshPlayerModifiersTask() { }
+    void Execute() override
+    {
+        auto record = GetLocalPlayerRecord();
+        if (record !is null)
+            record.RefreshModifiers();
+    }
+}
+
+
 int g_wallDelta;
 %if CONSOLE
 int g_enemyIdleUpdateFreq = 3;
@@ -2009,6 +2022,8 @@ class BaseGameMode : AGameMode
 
 		ActivatePlayerRecord(peer);
 	
+		QueuedTasks::Queue(30, RefreshPlayerModifiersTask());
+
 		bool loadedStartPos = false;
 		WorldScript::LevelStart@ loadedLevelStart = null;
 
@@ -2418,5 +2433,38 @@ class BaseGameMode : AGameMode
 	bool ToggleGuildHall(bool showMenu)
 	{
 		return false;
+	}
+
+	void UpdatePeerName(uint8 peer, string newName)
+	{
+		//print("AS UpdatePeerName_ " + newName + " --- " + peer);
+		//print("AS UpdatePeerName length " + g_players.length());
+		for (uint i = 0; i < g_players.length(); i++)
+		{
+			//print("g_players[i].peer " + g_players[i].peer);
+			if (g_players[i].peer == peer)
+			{
+
+				g_players[i].name = newName;
+
+				print("g_players[i].name " + g_players[i].name);
+
+				@g_players[i].playerNameText = null;
+			}
+		}
+
+
+		auto gm = cast<Campaign>(g_gameMode);
+		if (gm !is null && gm.m_hud !is null && gm.m_hud.m_waypoints !is null)
+		{
+			for (uint i = 0; i < gm.m_hud.m_waypoints.m_waypoints.length(); i++)
+			{
+				auto wp = cast<PlayerWaypoint>(gm.m_hud.m_waypoints.m_waypoints[i]);
+				if (wp is null)
+					continue;
+
+				wp.MakeNameText();
+			}
+		}
 	}
 }

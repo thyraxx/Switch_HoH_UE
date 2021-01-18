@@ -99,19 +99,18 @@ namespace Menu
 			if (plrSave is null)
 				return;
 
-			string charName;
-			if(isLocal)
-				charName = GetParamString(UnitPtr(), plrSave, "name", false);
-			else
+			string charName = GetParamString(UnitPtr(), plrSave, "name", false);
+
+			if(!isLocal)
 %if TARGET_XB1
 			{
 				if(Lobby::HasUGCPrivilege())
-					charName = GetParamString(UnitPtr(), plrSave, "nameCensored", false);
+					charName = Lobby::GetCachedFilteredName(charName);
 				else
 					charName = Lobby::GetPlayerName(peer);
 			}
 %else			
-			charName = GetParamString(UnitPtr(), plrSave, "nameCensored", false);
+			charName = Lobby::GetCachedFilteredName(charName);
 %endif
 
 			string charClass = GetParamString(UnitPtr(), plrSave, "class", false);

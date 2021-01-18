@@ -78,7 +78,7 @@ class Survival : Campaign
 
 		m_savedFountainEffects = Fountain::CurrentEffects;
 		Fountain::ClearEffects();
-		Fountain::RefreshModifiers(g_allModifiers);
+		//Fountain::RefreshModifiers(g_allModifiers);
 
 		if (Network::IsServer())
 		{

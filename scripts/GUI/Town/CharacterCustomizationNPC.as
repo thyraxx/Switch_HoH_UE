@@ -87,7 +87,7 @@ class CharacterCustomizationNPC : ScriptWidgetHost
 
 					auto record = GetLocalPlayerRecord();
 					record.name = m_base.m_wName.m_text.plain();
-					record.nameCensored = Platform::CheckProfanity(record.name);
+
 					record.colors = m_base.m_dyes;
 					record.face = m_base.m_face;
 					record.voice = voice.m_id;
@@ -117,7 +117,7 @@ class CharacterCustomizationNPC : ScriptWidgetHost
 					SValueBuilder builder;
 					builder.PushDictionary();
 					builder.PushString("name", record.name);
-					builder.PushString("nameCensored", record.nameCensored);
+
 					builder.PushInteger("face", record.face);
 					builder.PushString("voice", record.voice);
 					builder.PushArray("colors");

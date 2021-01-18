@@ -315,8 +315,9 @@ class FountainShopMenuContent : ShopMenuContent
 		builder.PopArray();
 		(Network::Message("SetFountain") << builder.Build()).SendToAll();
 
-		Fountain::RefreshModifiers(g_allModifiers);
+		//Fountain::RefreshModifiers(g_allModifiers);
 
+		player.RefreshModifiers();
 		player.RefreshModifiers();
 
 		ReloadList();

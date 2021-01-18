@@ -352,6 +352,9 @@ class MainMenu : BaseGameMode
 		return true;
 	}
 
+	int JoiningLobbyMS = 0;
+	int JoiningLobbyMSStatus = 0;
+
 	void UpdateFrame(int ms, GameInput& gameInput, MenuInput& menuInput) override
 	{
 		if (m_state == MenuState::MainMenu)
@@ -459,6 +462,28 @@ class MainMenu : BaseGameMode
 			DiscordPresence::Update(ms);
 			ServicePresence::Update(ms);
 		}
+
+		if(m_joiningMenu !is null)
+		{
+			auto w_Txt = cast<TextWidget>(m_joiningMenu.m_widget.GetWidgetById("joining_text"));
+
+
+			JoiningLobbyMS = JoiningLobbyMS + ms;
+			if(JoiningLobbyMS > 800 && w_Txt !is null)
+			{
+				JoiningLobbyMS = 0;
+				JoiningLobbyMSStatus = (JoiningLobbyMSStatus + 1) % 4;
+				if(JoiningLobbyMSStatus == 0)
+					w_Txt.SetText("Joining lobby");
+				else if(JoiningLobbyMSStatus == 1)
+					w_Txt.SetText("Joining lobby.");
+				else if(JoiningLobbyMSStatus == 2)
+					w_Txt.SetText("Joining lobby..");
+				else if(JoiningLobbyMSStatus == 3)
+					w_Txt.SetText("Joining lobby...");
+			}
+		}
+
 	}
 
 	vec2 GetCameraPos(int idt) override
@@ -688,6 +713,8 @@ class MainMenu : BaseGameMode
 	{
 		@m_joiningMenu = Menu::JoiningLobbyMenu(m_gameMenu);
 		m_gameMenu.GetCurrentMenu().OpenMenu(m_joiningMenu, "gui/main_menu/joininglobby.gui");
+		JoiningLobbyMS = 0;
+		JoiningLobbyMSStatus = 0;
 	}
 
 	bool LobbyInviteAccepted(uint64 id)

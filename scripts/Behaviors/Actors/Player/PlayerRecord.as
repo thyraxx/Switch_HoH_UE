@@ -144,7 +144,7 @@ class PlumePair
 class PlayerRecord
 {
 	string name; //NOTE: This can be utf8!
-	string nameCensored;
+
 	// Userdata that can be used by mods. This does NOT save by itself.
 	dictionary userdata;
 
@@ -854,6 +854,8 @@ class PlayerRecord
 			}
 		}
 
+		Fountain::RefreshModifiers(GetModifiers()); 
+
 		Hooks::Call("PlayerRecordRefreshModifiers", @this);
 
 		RefreshModifiersBuffs();
@@ -861,7 +863,7 @@ class PlayerRecord
 		// Not really a modifier, but it fits here
 		oneHealth = Fountain::HasEffect("1_hp");
 		
-		modifiers.RefreshCache();
+		GetModifiers().RefreshCache();
 	}
 
 	void RefreshSkillModifiers()
@@ -897,7 +899,7 @@ class PlayerRecord
 			}
 		}
 		
-		modifiers.RefreshCache();
+		GetModifiers().RefreshCache();
 	}
 
 	void LoadRetiredModifiers(array<Modifiers::Modifier@> mods, int level)
@@ -1202,11 +1204,11 @@ class PlayerRecord
 			return name;
 %if TARGET_XB1
 		if(Lobby::HasUGCPrivilege())
-			return nameCensored;
+			return name;
 		else
 			return Lobby::GetPlayerName(peer);
 %else
-		return nameCensored;
+		return name;
 %endif
 	}
 

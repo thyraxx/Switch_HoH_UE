@@ -915,8 +915,15 @@ namespace PlayerHandler
 
 		auto record = player.m_record;
 		
-		record.name = GetParamString(UnitPtr(), params, "name");
-		record.nameCensored = GetParamString(UnitPtr(), params, "nameCensored");
+		//record.name = GetParamString(UnitPtr(), params, "name");
+
+		string nm = GetParamString(UnitPtr(), params, "name");
+
+		if(Lobby::NameAlreadyFiltered(nm))
+			record.name = Lobby::GetCachedFilteredName(nm);
+		else
+			Lobby::CheckProfanity(nm, record.peer);
+
 		record.face = GetParamInt(UnitPtr(), params, "face");
 		record.voice = GetParamString(UnitPtr(), params, "voice");
 
@@ -945,6 +952,19 @@ namespace PlayerHandler
 		record.currentCorpse = uint(GetParamInt(UnitPtr(), params, "corpse"));
 
 		player.UpdateProperties();
+
+		auto gm = cast<Campaign>(g_gameMode);
+		if (gm !is null && gm.m_hud !is null && gm.m_hud.m_waypoints !is null)
+		{
+			for (uint i = 0; i < gm.m_hud.m_waypoints.m_waypoints.length(); i++)
+			{
+				auto wp = cast<PlayerWaypoint>(gm.m_hud.m_waypoints.m_waypoints[i]);
+				if (wp is null)
+					continue;
+
+				wp.MakeNameText();
+			}
+		}
 	}
 
 	void PlayerChangeClass(uint8 peer, string newClass)

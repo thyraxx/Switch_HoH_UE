@@ -71,7 +71,7 @@ namespace Menu
 					builder.PushString("class", m_charClass);
 					if (Platform::HasDLC("mt"))
 						builder.PushBoolean("mercenary", m_charMercenary);
-					builder.PushString("nameCensored", m_base.m_wName.m_text.plain());
+
 					builder.PushArray("colors");
 					for (uint i = 0; i < m_base.m_dyes.length(); i++)
 					{
