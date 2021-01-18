@@ -1,0 +1,75 @@
+<gui>
+	<sprites>
+		<sprite name="frame-buttons" texture="gui/playermenu.png"><frame>0 0 332 20</frame></sprite>
+		<sprite name="frame-line" texture="gui/playermenu.png"><frame>0 20 332 3</frame></sprite>
+		<sprite name="frame-bottom" texture="gui/playermenu.png"><frame>0 25 332 2</frame></sprite>
+
+%include "gui/closebutton_sprites.inc"
+%include "gui/scalablebutton_sprites.inc"
+%include "gui/controllerbuttons_sprites.inc"
+	</sprites>
+
+	<doc>
+		<group>
+			<rect width="332" height="258" anchor="0.5 0.5">
+				<sprite src="frame-buttons" />
+				<sprite src="frame-line" offset="0 20" />
+				<sprite src="frame-bottom" offset="0 256" />
+
+				<rect offset="0 23" width="2" height="233" spriteset="gui/variable/playermenu_left_vert.sval" />
+				<rect offset="330 23" width="2" height="233" spriteset="gui/variable/playermenu_right_vert.sval" />
+
+				<!-- Tab buttons -->
+				<rect offset="2 2" width="328" height="18" flow="hbox">
+
+					<rect width="32" height="18" spriteset="gui/variable/slider/inside_disabled_borders.sval">
+						<sprite src="L" offset="4 -3"/>
+					</rect>
+
+					<rect width="3" height="18" spriteset="gui/variable/3pxbar_vert.sval" />
+
+					<rect width="258" height="18">
+						<checkboxgroup id="tabs-container" width="258" height="18">
+							<clip id="tabs-clip" width="258" height="18" flow="hbox">
+								<scalebutton spriteset="scalebutton" width="109" font="gui/fonts/arial11.fnt" value="map" func="set-tab map" text=".hud.character.map" />
+								<scalebutton spriteset="scalebutton" width="110" font="gui/fonts/arial11.fnt" value="character" func="set-tab character" text=".hud.character.character" />
+								<scalebutton spriteset="scalebutton" width="110" font="gui/fonts/arial11.fnt" value="effects" func="set-tab effects" text=".hud.character.effects" />
+								<scalebutton spriteset="scalebutton" width="109" font="gui/fonts/arial11.fnt" value="stats" func="set-tab stats" text=".hud.character.stats" />
+							</clip>
+						</checkboxgroup>
+					</rect>
+
+					<rect width="3" height="18" spriteset="gui/variable/3pxbar_vert.sval" />
+
+					<rect width="32" height="18" spriteset="gui/variable/slider/inside_disabled_borders.sval">
+						<sprite src="R" offset="4 -3"/>
+					</rect>
+
+				</rect>
+
+				<!-- spritebutton spriteset="close" offset="312 2" func="close" / -->
+
+
+
+				<rect id="tab-map" width="328" height="233" offset="2 23" />
+				<rect id="tab-character" width="328" height="233" offset="2 23" />
+				<rect id="tab-effects" width="328" height="233" offset="2 23" />
+				<rect id="tab-stats" width="328" height="233" offset="2 23" />
+
+				<!--sprite src="L" offset="0 -18"/-->
+				<!--sprite src="R" offset="308 -18"/-->
+
+				<rect anchor="1 1" offset="-8 20" flow="hbox" spacing="6" width="145" height="20">
+					<rect width="90" height="20">
+						<sprite src="Y"/>
+						<text font="gui/fonts/arial11.fnt" text="Toggle Tooltip" offset="24 4"/>
+					</rect>
+					<rect width="47" height="20">
+						<sprite src="B"/>
+						<text font="gui/fonts/arial11.fnt" text="Back" offset="24 4"/>
+					</rect>
+				</rect>
+			</rect>
+		</group>
+	</doc>
+</gui>

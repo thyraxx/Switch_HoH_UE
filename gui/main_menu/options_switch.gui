@@ -1,0 +1,201 @@
+<gui>
+	<sprites>
+%include "gui/closebutton_sprites.inc"
+%include "gui/scalablebutton_sprites.inc"
+%include "gui/scrollbar_sprites.inc"
+%include "gui/main_menu/slider_sprites.inc"
+%include "gui/controllerbuttons_sprites.inc"
+	</sprites>
+
+	<doc>
+		<group><group id="menu">
+			<rect width="365" height="255" anchor="0.5 0.3" spriteset="gui/variable/bigwindow_borders.sval">
+				<!-- Header -->
+				<rect width="361" height="18" offset="2 2" flow="hbox">
+					<!-- Headline -->
+					<rect width="358" height="18" spriteset="gui/variable/headline_hor.sval">
+						<text font="gui/fonts/arial11_bold.fnt" text="OPTIONS" anchor="0.5 0.5" />
+					</rect>
+
+					<!-- Separator -->
+					<rect width="3" height="18" spriteset="gui/variable/3pxbar_vert.sval" />
+
+					<!-- Close button -->
+					<!-- spritebutton func="back" spriteset="close" /-->
+				</rect>
+
+				<!-- Separator -->
+				<rect width="361" height="3" offset="2 20" spriteset="gui/variable/3pxbar_hor.sval" />
+
+				<!-- Settings container -->
+				<scrollrect id="options-list" width="347" height="230" offset="2 23" color="#202a26FF" shadow="#0c120fFF" shadowsize="2" flow="vbox">
+
+
+<!-- Removed Retro-CRT mode and control scheme
+					<group inner="true">
+						<rect width="347" height="3" spriteset="gui/variable/3pxbar_hor.sval" />
+						<grouprect inner="true" flow="vbox" offset="0 3" padding="4 3" spacing="4" color="#202a26FF" shadow="#0c120fFF" shadowsize="2">
+
+							<rect width="340" height="18">
+								<text offset="0 1" font="gui/fonts/arial11.fnt" text=".rg_crt_mode"/>
+								<checkboxgroup flow="hbox" flow-flip="true" spacing="2" cvar="rg_crt_mode" func="cfg-radio rg_crt_mode">
+									<scalebutton spriteset="scalebutton" padding="10 0" font="gui/fonts/arial11.fnt" value="true" text="Enable" />
+									<scalebutton spriteset="scalebutton" padding="10 0" font="gui/fonts/arial11.fnt" value="false" text="Disable" />
+								</checkboxgroup>
+							</rect>
+						</grouprect>
+					</group>
+
+					<group inner="true">
+						<rect width="347" height="3" spriteset="gui/variable/3pxbar_hor.sval" />
+						<grouprect inner="true" flow="vbox" offset="0 3" padding="4 3" spacing="4" color="#202a26FF" shadow="#0c120fFF" shadowsize="2">
+							<rect width="340" height="18">
+								<text offset="0 1" font="gui/fonts/arial11.fnt" text=".c_scheme"/>
+								<checkboxgroup flow="hbox" flow-flip="true" spacing="2" cvar="c_scheme" func="c_scheme">
+									<scalebutton spriteset="scalebutton" padding="10 0" font="gui/fonts/arial11.fnt" value="true" text="Classic" />
+									<scalebutton spriteset="scalebutton" padding="10 0" font="gui/fonts/arial11.fnt" value="false" text="Dual" />
+								</checkboxgroup>
+							</rect>
+						</grouprect>
+					</group>
+-->
+				<!-- Game options -->
+					<group inner="true">
+						<rect width="347" height="3" spriteset="gui/variable/3pxbar_hor.sval" />
+						<grouprect inner="true" flow="vbox" offset="0 3" padding="4 3" spacing="4" color="#202a26FF" shadow="#0c120fFF" shadowsize="2">
+														
+							<!-- Small minimap -->
+							<rect width="340" height="18">
+								<text offset="0 1" font="gui/fonts/arial11.fnt" text=".ui_minimap_size" tooltip=".ui_minimap_size.help" />
+								<checkboxgroup flow="hbox" flow-flip="true" spacing="2" cvar="ui_minimap_size" func="cfg-radio ui_minimap_size">
+									<scalebutton spriteset="scalebutton" padding="10 0" font="gui/fonts/arial11.fnt" value="-1" text=".menu.off" />
+									<scalebutton spriteset="scalebutton" padding="10 0" font="gui/fonts/arial11.fnt" value="70" text=".ui_minimap_size.small" />
+									<scalebutton spriteset="scalebutton" padding="10 0" font="gui/fonts/arial11.fnt" value="100" text=".ui_minimap_size.medium" />
+									<scalebutton spriteset="scalebutton" padding="10 0" font="gui/fonts/arial11.fnt" value="139" text=".ui_minimap_size.big" />
+								</checkboxgroup>
+							</rect>
+							
+							<!-- Key count -->
+							<rect width="340" height="18">
+								<text offset="0 1" font="gui/fonts/arial11.fnt" text=".ui_key_count" tooltip=".ui_key_count.help" />
+								<checkboxgroup flow="hbox" flow-flip="true" spacing="2" cvar="ui_key_count" func="cfg-radio ui_key_count">
+									<scalebutton spriteset="scalebutton" padding="10 0" font="gui/fonts/arial11.fnt" value="true" text=".menu.yes" />
+									<scalebutton spriteset="scalebutton" padding="10 0" font="gui/fonts/arial11.fnt" value="false" text=".menu.no" />
+								</checkboxgroup>
+							</rect>
+							
+							<!-- Laser sight -->
+							<rect width="340" height="18">
+								<text offset="0 1" font="gui/fonts/arial11.fnt" text=".g_laser_sight" tooltip="Show a thin line to assist in aiming." />
+								<checkboxgroup flow="hbox" flow-flip="true" spacing="2" cvar="g_laser_sight" func="cfg-radio g_laser_sight">
+									<!--<scalebutton spriteset="scalebutton" padding="10 0" font="gui/fonts/arial11.fnt" value="-1" text=".menu.automatic" />-->
+									<scalebutton spriteset="scalebutton" padding="10 0" font="gui/fonts/arial11.fnt" value="1" text=".menu.yes" />
+									<scalebutton spriteset="scalebutton" padding="10 0" font="gui/fonts/arial11.fnt" value="0" text=".menu.no" />
+								</checkboxgroup>
+							</rect>
+							
+							<!-- Floating texts -->
+							<rect width="340" height="18">
+								<text offset="0 1" font="gui/fonts/arial11.fnt" text="FLOATING TEXTS" tooltip="Show floating texts when dealing or receiving damage." />
+								<checkboxgroup flow="hbox" flow-flip="true" spacing="2" cvar="r_floating_texts" func="cfg-radio r_floating_texts">
+									<!--<scalebutton spriteset="scalebutton" padding="10 0" font="gui/fonts/arial11.fnt" value="-1" text=".menu.automatic" />-->
+									<scalebutton spriteset="scalebutton" padding="10 0" font="gui/fonts/arial11.fnt" value="1" text=".menu.yes" />
+									<scalebutton spriteset="scalebutton" padding="10 0" font="gui/fonts/arial11.fnt" value="0" text=".menu.no" />
+								</checkboxgroup>
+							</rect>
+							
+							<!-- Screenshake -->
+							<rect width="340" height="18">
+								<text offset="0 1" font="gui/fonts/arial11.fnt" text=".g_screenshake" tooltip=".g_screenshake.help" />
+								<slider spriteset="slider" allow-mousewheel="false" func="g_screenshake" min="0.0" max="2.0" width="156" height="18" anchor="1 0" />
+							</rect>
+							
+						</grouprect>
+					</group>
+
+				<!-- Graphics options -->
+					<group inner="true">
+						<rect width="347" height="3" spriteset="gui/variable/3pxbar_hor.sval" />
+						<grouprect inner="true" flow="vbox" offset="0 3" padding="4 3" spacing="2" color="#202a26FF" shadow="#0c120fFF" shadowsize="2">
+							<!-- Brightness -->
+							<rect width="340" height="18">
+								<text offset="0 1" font="gui/fonts/arial11.fnt" color="#FFFFFFFF" text=".rg_brightness" tooltip=".rg_brightness.help" />
+								<slider spriteset="slider" allow-mousewheel="false" func="rg_brightness" min="-0.75" max="0.75" width="156" height="18" anchor="1 0" />
+							</rect>
+
+							<!-- Gamma -->
+							<rect width="340" height="18">
+								<text offset="0 1" font="gui/fonts/arial11.fnt" color="#FFFFFFFF" text=".rg_gamma" tooltip=".rg_gamma.help" />
+								<slider spriteset="slider" allow-mousewheel="false" func="rg_gamma" min="0.1" max="5.0" width="156" height="18" anchor="1 0" />
+							</rect>
+
+							<!-- Contrast -->
+							<rect width="340" height="18">
+								<text offset="0 1" font="gui/fonts/arial11.fnt" color="#FFFFFFFF" text=".rg_contrast" tooltip=".rg_contrast.help" />
+								<slider spriteset="slider" allow-mousewheel="false" func="rg_contrast" min="0.1" max="3.0" width="156" height="18" anchor="1 0" />
+							</rect>
+%if TARGET_XB1
+							<rect width="340" height="18">
+								<text offset="0 1" font="gui/fonts/arial11.fnt" color="#FFFFFFFF" text="OVERSCAN"  />
+								<slider spriteset="slider" allow-mousewheel="false" func="ui_overscan" min="0.0" max="0.05" width="156" height="18" anchor="1 0" />
+							</rect>
+%endif
+						</grouprect>
+					</group>
+
+
+				<!-- Sound options -->
+					<group inner="true">
+						<rect width="347" height="3" spriteset="gui/variable/3pxbar_hor.sval" />
+						<grouprect inner="true" flow="vbox" offset="0 3" padding="4 3" spacing="4" color="#202a26FF" shadow="#0c120fFF" shadowsize="2">	
+							<rect width="340" height="38" flow="vbox" spacing="2">
+								<rect width="340" height="18">
+									<text offset="0 1" font="gui/fonts/arial11.fnt" color="#FFFFFFFF" text=".snd_volume_music" />
+									<slider spriteset="slider" func="snd_volume_music" width="156" height="18" anchor="1 0" />
+								</rect>
+
+								<rect width="340" height="18">
+									<text offset="0 1" font="gui/fonts/arial11.fnt" color="#FFFFFFFF" text=".snd_volume_etc" />
+									<slider spriteset="slider" func="snd_volume_etc" width="156" height="18" anchor="1 0" />
+								</rect>
+							</rect>
+						</grouprect>
+					</group>
+<!-- Removed generic in-game info setting
+					<group inner="true">
+						<rect width="347" height="3" spriteset="gui/variable/3pxbar_hor.sval" />
+						<grouprect inner="true" flow="vbox" offset="0 3" padding="4 3" spacing="4" color="#202a26FF" shadow="#0c120fFF" shadowsize="2">
+							<rect width="340" height="18">
+								<text offset="0 1" font="gui/fonts/arial11.fnt" color="#FFFFFFFF" text=".r_info"/>
+								<checkboxgroup flow="hbox" flow-flip="true" spacing="2" cvar="r_info" func="cfg-radio r_info">
+									<scalebutton spriteset="scalebutton" padding="10 0" font="gui/fonts/arial11.fnt" value="0" text="None" />
+									<scalebutton spriteset="scalebutton" padding="10 0" font="gui/fonts/arial11.fnt" value="1" text="Medium" />
+									<scalebutton spriteset="scalebutton" padding="10 0" font="gui/fonts/arial11.fnt" value="2" text="High" />
+								</checkboxgroup>
+							</rect>
+						</grouprect>
+					</group>
+-->
+				</scrollrect>
+
+				<!-- Scrollbar -->
+				<scrollbar forid="options-list" spriteset="scrollbar" outside="true" offset="3 0" buttons-size="14" trough-offset="18" handle-border="2" />
+
+				<!-- Separators -->
+				<rect width="3" height="230" offset="349 23" spriteset="gui/variable/3pxbar_vert.sval" />
+				<rect width="3" height="230" offset="360 23" spriteset="gui/variable/3pxbar_vert.sval" />
+
+				<rect anchor="1 1" offset="-52 20" flow="hbox" spacing="6" width="49" height="20">
+					<rect width="47" height="20">
+						<sprite src="X"/>
+						<text font="gui/fonts/arial11.fnt" text="Reset" offset="24 4"/>
+					</rect>
+					<rect width="47" height="20">
+						<sprite src="B"/>
+						<text font="gui/fonts/arial11.fnt" text="Back" offset="24 4"/>
+					</rect>
+				</rect>
+			</rect>
+		</group></group>
+	</doc>
+</gui>
