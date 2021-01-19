@@ -86,6 +86,18 @@ class GeneralStoreMenuContent : UpgradeShopMenuContent
 		m_shopMenu.DoLayout();
 	}
 
+	void SelectReroll()
+	{
+		if (m_wReroll !is null && !m_wSoldOut.m_visible)
+		{
+			auto wRerollButton = cast<ScalableSpriteIconButtonWidget>(m_wReroll.GetWidgetById("button"));
+			if (wRerollButton !is null)
+			{
+				wRerollButton.SetHovering(true, wRerollButton.GetCenter());
+			}
+		}
+	}
+
 	void OnFunc(Widget@ sender, string name) override
 	{
 		if (name == "reroll")
@@ -106,6 +118,7 @@ class GeneralStoreMenuContent : UpgradeShopMenuContent
 			itemShop.RerollItems(m_shopMenu.m_currentShopLevel, player);
 
 			ReloadList();
+			SelectReroll();
 		}
 		else
 			UpgradeShopMenuContent::OnFunc(sender, name);

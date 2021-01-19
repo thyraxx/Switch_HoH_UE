@@ -716,11 +716,25 @@ class Campaign : BaseGameMode
 		Hooks::Call("GameModeRenderFrame", @this, idt, sb);
 
 		BaseGameMode::RenderFrame(idt, sb);
+
+		sb.Begin(m_wndWidth, m_wndHeight, m_wndScale);
+		DrawFloatingTexts(idt, sb);
+		DrawOverheadBossBars(sb, idt);
+		m_hud.DrawZoomable(sb, idt);
+		sb.End();
+	}
+
+
+	void RenderFrame_2(int idt, SpriteBatch& sb) override
+	{
+		Hooks::Call("GameModeRenderFrame", @this, idt, sb);
+
+		BaseGameMode::RenderFrame_2(idt, sb);
 	}
 
 	void RenderWidgets(PlayerRecord@ player, int idt, SpriteBatch& sb) override
 	{
-		DrawFloatingTexts(idt, sb);
+		//DrawFloatingTexts(idt, sb);
 
 		if (m_gameOver.m_visible)
 		{
@@ -774,7 +788,7 @@ class Campaign : BaseGameMode
 			sb.DrawString(textpos, m_textMapLevel);
 		}
 
-		DrawOverheadBossBars(sb, idt);
+		//DrawOverheadBossBars(sb, idt);
 
 		// Render darkness if not dead
 		auto plr = cast<PlayerBase>(player.actor);

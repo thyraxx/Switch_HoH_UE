@@ -37,7 +37,7 @@ namespace Modifiers
 		bool HasComboProps() override { return m_props.x != 0 || m_props.y != 0 || m_props.z != 0; }
 		ivec3 ComboProps(PlayerBase@ player) override { return m_props; }
 
-		ModDyn DynComboDisabled() override { return m_disabled ? ModDyn::Static : ModDyn::None; }
+		ModDyn DynComboDisabled() override { return m_disabled ? ModDyn::Dynamic : ModDyn::None; }
 		bool ComboDisabled(PlayerBase@ player) override { return m_disabled; }
 	}
 }

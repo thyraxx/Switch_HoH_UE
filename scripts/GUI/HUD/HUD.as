@@ -449,10 +449,19 @@ class HUD : IWidgetHoster
 %PROFILE_STOP
 	}
 
-	void Draw(SpriteBatch& sb, int idt) override
+
+	void DrawZoomable(SpriteBatch& sb, int idt)
 	{
 		bool drawnPlayerBars = DrawPlayerBars(sb);
 		DrawUseIcon(sb, drawnPlayerBars ? 22 : 14);
+
+		//DrawHoverItem(sb);
+	}
+
+	void Draw(SpriteBatch& sb, int idt) override
+	{
+		//bool drawnPlayerBars = DrawPlayerBars(sb);
+		//DrawUseIcon(sb, drawnPlayerBars ? 22 : 14);
 
 		m_speechBubbles.Draw(sb, idt);
 %if TARGET_XB1
@@ -606,7 +615,7 @@ class HUD : IWidgetHoster
 			vec2 tooltipSize = m_tooltipItems.GetSize();
 			m_tooltipItems.Draw(sb, vec2(
 				gm.m_wndWidth / 2 - tooltipSize.x / 2,
-				gm.m_wndHeight / 2 - tooltipSize.y - 30
+				gm.m_wndHeight / 2 - tooltipSize.y - 30 - (GetVarFloat("blit_zoom") * 15)
 			));
 		}
 	}

@@ -69,7 +69,11 @@ class PlayerCorpse : IUsable, IPreRenderable
 	{
 		auto gm = cast<BaseGameMode>(g_gameMode);
 		if (m_record.local)
+		{
 			gm.StopSpectating();
+			QueuedTasks::Queue(3, RefreshPlayerModifiersTask());
+		}
+
 
 %if HARDCORE
 		if (!g_isTown)

@@ -133,6 +133,8 @@ class DrinksMenuContent : ShopMenuContent
 				wNewItem.m_tooltipTitle = "\\c" + GetItemQualityColorString(drink.quality) + utf8string(Resources::GetString(drink.name)).toUpper().plain();
 				wNewItem.m_tooltipText = Resources::GetString(drink.desc);
 
+				wNewItem.m_canFocus = true;
+
 %if HARDCORE
 				if (titleIndex < int(drink.quality) - 1)
 				{

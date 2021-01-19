@@ -107,7 +107,7 @@
 		<dict>
 			<string name="class">Skills::ShootProjectileFan</string>
 			
-			<int name="cooldown">250</int>
+			<int name="cooldown">200</int>
 			<int name="castpoint">0</int>
 			
 			<string name="snd">event:/player/thief/fan_of_knives</string>

@@ -37,7 +37,10 @@ namespace Menu
 %if TARGET_XB1
 			Config::SaveVar("ui_overscan");
 %endif
-			
+%if TARGET_NX
+			Config::SaveVar("blit_zoom");
+			Config::SaveVar("r_zoom_blur");
+%endif
 			Config::SaveVar("g_laser_sight");
 			Config::SaveVar("snd_volume_music");
 			Config::SaveVar("snd_volume_etc");
@@ -48,6 +51,21 @@ namespace Menu
 		void OnFunc(Widget@ sender, string name) override
 		{	
 			//print(GetVarBool("rg_crt_mode"));
+%if TARGET_NX
+			if(name=="zoom_change")
+			{
+				bool blurring = GetVarBool("r_zoom_blur");
+				float zoom_lvl = GetVarFloat("blit_zoom");
+				//print("zoom_change. r_zoom_blur: " + blurring + "  " + GetVarFloat("blit_zoom"));
+				if(zoom_lvl < 0.01f && blurring)
+				{
+					SetVar("r_zoom_blur", false);
+					zoom_lvl = 0.0f;
+				}
+				else if(zoom_lvl > 0.0f && !blurring)
+					SetVar("r_zoom_blur", true);
+			}
+%endif
 			if(name=="back") 
 				SwitchSave();
 			//print(">>>>>>>>>>> name: " + name);

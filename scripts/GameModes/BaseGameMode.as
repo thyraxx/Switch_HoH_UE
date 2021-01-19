@@ -374,6 +374,7 @@ class BaseGameMode : AGameMode
 %if TARGET_XB1
 		AddVar("ui_overscan", 0.0f);
 %endif
+		AddVar("blit_zoom", 0.0f);
 		@m_widgetInspector = WidgetInspector();
 
 		if (!GetVarBool("ui_hardware_cursor"))
@@ -1672,6 +1673,12 @@ class BaseGameMode : AGameMode
 				DisplayPlayerStats(sb, record, playerHuskPos);
 			}
 		}
+		sb.PopTransformation();
+	}
+
+	void RenderFrame_2(int idt, SpriteBatch& sb)
+	{
+		sb.PushTransformation(mat::scale(mat4(), GetUIScale()));
 
 		if (GetVarBool("ui_draw_widgets"))
 		{

@@ -207,6 +207,8 @@ class Survival : Campaign
 		builder.PushLong("crowd-time-elapsed", int64(m_crowdTimeElapsed));
 
 		builder.PushBoolean("exp-locked", m_expLocked);
+
+		Fountain::ClearEffects();
 	}
 
 	void LoadPlayer(SValue& data, PlayerRecord& player) override

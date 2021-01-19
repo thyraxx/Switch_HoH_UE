@@ -18,6 +18,8 @@ class PlayerWaypoint : Waypoint
 	float fadeEndY = (g_gameMode.m_wndHeight/2.0f) - 50.0f;
 	float fadeStartY = (g_gameMode.m_wndHeight/2.0f);
 
+	float lastZoom = -1;
+
 	PlayerWaypoint(UnitPtr unit, PlayerRecord@ record)
 	{
 		HUD@ hud = GetHUD();
@@ -103,6 +105,21 @@ class PlayerWaypoint : Waypoint
 		else if (distance < m_fadeNearStart)
 			a = 1.0f - (distance - m_fadeNearStart) / (m_fadeNearEnd - m_fadeNearStart);
 		*/
+
+		float currZoom = GetVarFloat("blit_zoom");
+		if(currZoom != lastZoom)
+		{
+			lastZoom = currZoom;
+
+			float zoomConstX = (currZoom * 70.0f);
+			float zoomConstY = (currZoom * 35.0f);
+
+			fadeEndX = (g_gameMode.m_wndWidth/2.0f) - 50.0f - zoomConstX;
+			fadeStartX = (g_gameMode.m_wndWidth/2.0f) - zoomConstX;
+
+			fadeEndY = (g_gameMode.m_wndHeight/2.0f) - 50.0f - zoomConstY;
+			fadeStartY = (g_gameMode.m_wndHeight/2.0f) - zoomConstY;
+		}
 
 		if (distance.y < fadeEndY && distance.x < fadeEndX)
 		{

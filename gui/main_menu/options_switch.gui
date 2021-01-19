@@ -9,7 +9,11 @@
 
 	<doc>
 		<group><group id="menu">
+%if TARGET_NX		
+			<rect width="365" height="275" anchor="0.5 0.3" spriteset="gui/variable/bigwindow_borders.sval">
+%else
 			<rect width="365" height="255" anchor="0.5 0.3" spriteset="gui/variable/bigwindow_borders.sval">
+%endif
 				<!-- Header -->
 				<rect width="361" height="18" offset="2 2" flow="hbox">
 					<!-- Headline -->
@@ -28,8 +32,11 @@
 				<rect width="361" height="3" offset="2 20" spriteset="gui/variable/3pxbar_hor.sval" />
 
 				<!-- Settings container -->
+%if TARGET_NX					
+				<scrollrect id="options-list" width="347" height="250" offset="2 23" color="#202a26FF" shadow="#0c120fFF" shadowsize="2" flow="vbox">
+%else
 				<scrollrect id="options-list" width="347" height="230" offset="2 23" color="#202a26FF" shadow="#0c120fFF" shadowsize="2" flow="vbox">
-
+%endif
 
 <!-- Removed Retro-CRT mode and control scheme
 					<group inner="true">
@@ -140,6 +147,12 @@
 								<slider spriteset="slider" allow-mousewheel="false" func="ui_overscan" min="0.0" max="0.05" width="156" height="18" anchor="1 0" />
 							</rect>
 %endif
+%if TARGET_NX
+							<rect width="340" height="18">
+								<text offset="0 1" font="gui/fonts/arial11.fnt" color="#FFFFFFFF" text="HANDHELD MODE ZOOM"  />
+								<slider spriteset="slider" allow-mousewheel="false" func="blit_zoom" func-on-change="zoom_change" min="0.0f" max="1.0f" width="156" height="18" anchor="1 0" />
+							</rect>
+%endif
 						</grouprect>
 					</group>
 
@@ -182,9 +195,13 @@
 				<scrollbar forid="options-list" spriteset="scrollbar" outside="true" offset="3 0" buttons-size="14" trough-offset="18" handle-border="2" />
 
 				<!-- Separators -->
+%if TARGET_NX				
+				<rect width="3" height="250" offset="349 23" spriteset="gui/variable/3pxbar_vert.sval" />
+				<rect width="3" height="250" offset="360 23" spriteset="gui/variable/3pxbar_vert.sval" />
+%else
 				<rect width="3" height="230" offset="349 23" spriteset="gui/variable/3pxbar_vert.sval" />
 				<rect width="3" height="230" offset="360 23" spriteset="gui/variable/3pxbar_vert.sval" />
-
+%endif
 				<rect anchor="1 1" offset="-52 20" flow="hbox" spacing="6" width="49" height="20">
 					<rect width="47" height="20">
 						<sprite src="X"/>
