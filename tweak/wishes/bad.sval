@@ -121,7 +121,7 @@
 		<string name="id">luck_less</string>
 		<int name="level">1</int>
 		<int name="favor">-2</int>
-		<dict>
+		<dict name="modifier">
 			<string name="class">Modifiers::Luck</string>
 			<float name="add">-3</float>
 		</dict>

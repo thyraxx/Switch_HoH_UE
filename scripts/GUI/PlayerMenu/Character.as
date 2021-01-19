@@ -385,7 +385,11 @@ class PlayerMenuCharacterTab : MultiplePlayersTab
 		vec2 statRegenMul = modifierList.RegenMul(player); // health, mana
 		float allHealthGainScale = modifierList.AllHealthGainScale(player);
 		float statExpMul = modifierList.ExpMul(player, null) + modifierList.ExpMulAdd(player, null);
-		float luckAdd = modifierList.LuckAdd(player);
+
+		float extraLuck = 0;
+		if(g_hasFortuitousEvents) extraLuck = 5;
+
+		float luckAdd = modifierList.LuckAdd(player) + extraLuck;
 
 		int64 xpStart = record.LevelExperience(record.level - 1);
 		int64 xpEnd = record.LevelExperience(record.level) - xpStart;

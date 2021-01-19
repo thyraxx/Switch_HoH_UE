@@ -47,8 +47,20 @@ class ActorBuffList
 			g_scene.SendUnitBuffed(m_actor.m_unit, owner, buff.m_def.m_pathHash, buff.m_intensity, buff.m_weaponInfo, buff.m_duration);
 		}
 	
-		if(buff.m_def !is null && buff.m_def.m_name == ".buff.attackspeed.name")
-			g_hasRapidBlows = true;
+		auto player = cast<PlayerBase>(m_actor);
+		if(buff.m_def !is null && player !is null && player.m_record !is null)
+		{
+			if(player.m_record.peer == Lobby::GetLocalPeer_BlitHack())
+			{
+				string bname = buff.m_def.m_name;
+				if(bname == ".buff.attackspeed.name")
+					g_hasRapidBlows = true;
+				else if(bname == ".buff.sundering.name")
+					g_hasSunderingStrikess = true;
+				else if(bname == ".buff.luck.name")
+					g_hasFortuitousEvents = true;
+			}
+		}
 
 		for (uint i = 0; i < m_buffs.length(); i++)
 		{
@@ -63,7 +75,7 @@ class ActorBuffList
 		m_buffs.insertLast(buff);
 		buff.Attach(m_actor, this);
 
-		auto player = cast<PlayerBase>(m_actor);
+		//auto player = cast<PlayerBase>(m_actor);
 		if (player !is null)
 			player.RefreshModifiersBuffs();
 		
@@ -168,6 +180,10 @@ class ActorBuffList
 			return;
 	
 		bool buffRemoved = false;
+
+		auto player = cast<PlayerBase>(m_actor);
+		auto localP = Lobby::GetLocalPeer_BlitHack();
+
 		for (uint i = 0; i < m_buffs.length();)
 		{
 			if (!m_buffs[i].Update(dt, m_actor))
@@ -177,8 +193,19 @@ class ActorBuffList
 				if (m_buffs.length() == 0)
 					break;
 			
-				if(m_buffs[i].m_def !is null && m_buffs[i].m_def.m_name == ".buff.attackspeed.name")
-					g_hasRapidBlows = false;
+				if(m_buffs[i].m_def !is null&& player !is null && player.m_record !is null)
+				{
+					if(player.m_record.peer == localP)
+					{
+						string bname = m_buffs[i].m_def.m_name;
+						if(bname == ".buff.attackspeed.name")
+							g_hasRapidBlows = false;
+						else if(bname == ".buff.sundering.name")
+							g_hasSunderingStrikess = false;
+						else if(bname == ".buff.luck.name")
+							g_hasFortuitousEvents = false;
+					}
+				}
 
 				m_buffs[i].Clear();
 				m_buffs.removeAt(i);

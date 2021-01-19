@@ -1225,8 +1225,11 @@ class Player : PlayerBase
 			
 
 		g_allModifiers.Update(this, dt);
-		m_currLuck = g_allModifiers.LuckAdd(this);
 
+		float extraLuck = 0;
+		if(g_hasFortuitousEvents) extraLuck = 5;
+
+		m_currLuck = g_allModifiers.LuckAdd(this) + extraLuck;
 
 
 		{ if (m_hello < 2.0f) { m_hello = randf(); } float x = m_hello * randf(); x = m_hello / randf(); if (m_hello >= 2.0f) { m_unit.SetPosition(vec3()); } }

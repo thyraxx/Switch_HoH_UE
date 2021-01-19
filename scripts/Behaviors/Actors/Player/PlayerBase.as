@@ -716,6 +716,8 @@ class PlayerBase : Actor, IPlayerActorDamager, IPreRenderable
 			modifiers.TriggerEffects(this, actor, Modifiers::EffectTrigger::SpellHit);
 		}
 
+		if(g_hasSunderingStrikess) armorIg *= 0.5;
+		
 		auto enemy = cast<CompositeActorBehavior>(actor);
 		if (enemy !is null)
 		{

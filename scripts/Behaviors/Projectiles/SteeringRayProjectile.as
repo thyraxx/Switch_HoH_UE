@@ -12,8 +12,8 @@ DynamicExpression@ GetDynamicExpression(string str)
 
 class SteeringRayProjectileCached : RayProjectileCached
 {
-	DynamicExpression@ m_dirSteering;
-	DynamicExpression@ m_speedSteering;
+	string m_dirSteering;
+	string m_speedSteering;
 
 	bool m_disableSteerOnBounce;
 	
@@ -22,8 +22,8 @@ class SteeringRayProjectileCached : RayProjectileCached
 	{
 		super(unit, params);
 		
-		@m_dirSteering = GetDynamicExpression(GetParamString(unit, params, "dir-steer", false));
-		@m_speedSteering = GetDynamicExpression(GetParamString(unit, params, "speed-steer", false));
+		m_dirSteering = GetParamString(unit, params, "dir-steer", false);
+		m_speedSteering = GetParamString(unit, params, "speed-steer", false);
 		m_disableSteerOnBounce = GetParamBool(unit, params, "disable-steer-on-bounce", false, false);
 	}
 }
@@ -47,8 +47,8 @@ class SteeringRayProjectile : RayProjectile
 
 		super(unit, params, cast<RayProjectileCached>(cache));
 
-		@m_dirSteering = cache.m_dirSteering;
-		@m_speedSteering = cache.m_speedSteering;
+		@m_dirSteering = GetDynamicExpression(cache.m_dirSteering);
+		@m_speedSteering = GetDynamicExpression(cache.m_speedSteering);
 		m_disableSteerOnBounce = cache.m_disableSteerOnBounce;
 	}
 	
