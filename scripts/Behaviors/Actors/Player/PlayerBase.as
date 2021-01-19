@@ -972,7 +972,9 @@ class PlayerBase : Actor, IPlayerActorDamager, IPreRenderable
 		m_currentArmor.x = (m_record.Armor() + armorAdd.x) * armorMul.x - negArmor.x;
 		m_currentArmor.y = (m_record.Resistance() + armorAdd.y) * armorMul.y - negArmor.y;
 
-		m_currentAttackSpeed.x = modifiers.AttackTimeMul(this);
+		float extra = 0;
+		if(g_hasRapidBlows) extra = 0.5;
+		m_currentAttackSpeed.x = modifiers.AttackTimeMul(this) + extra;
 		m_currentAttackSpeed.y = modifiers.SkillTimeMul(this);
 	}
 	

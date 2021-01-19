@@ -35,6 +35,9 @@ class ItemForgeMenuContent : ShopMenuContent
 	SoundEvent@ m_sndAttune;
 	SoundEvent@ m_sndCraft;
 
+	string last_mfunc;
+	ScalableSpriteButtonWidget@ widgetToHover;
+
 	ItemForgeMenuContent(ShopMenu@ shopMenu)
 	{
 		super(shopMenu);
@@ -257,6 +260,8 @@ class ItemForgeMenuContent : ShopMenuContent
 					else
 						wButtonAttune.m_func = "attune " + item.id;
 				}
+				string fc = "attune " + item.id;
+				if(last_mfunc == fc) @widgetToHover = wButtonAttune;
 			}
 
 			auto wButtonCraft = cast<ScalableSpriteButtonWidget>(wNewItem.GetWidgetById("button-craft"));
@@ -286,6 +291,8 @@ class ItemForgeMenuContent : ShopMenuContent
 					});
 				}
 %endif
+				string fc = "craft " + item.id;
+				if(last_mfunc == fc) @widgetToHover = wButtonCraft;
 			}
 
 			m_wList.AddChild(wNewItem);
@@ -337,6 +344,9 @@ class ItemForgeMenuContent : ShopMenuContent
 	void OnFunc(Widget@ sender, string name) override
 	{
 		auto parse = name.split(" ");
+
+		last_mfunc = name;
+		@widgetToHover = null;
 		if (parse[0] == "craft")
 		{
 			auto item = g_items.GetItem(parse[1]);
@@ -429,5 +439,8 @@ class ItemForgeMenuContent : ShopMenuContent
 		}
 		else
 			ShopMenuContent::OnFunc(sender, name);
+
+		if(widgetToHover !is null) widgetToHover.SetHovering(true, widgetToHover.GetCenter());
+		@widgetToHover = null;
 	}
 }

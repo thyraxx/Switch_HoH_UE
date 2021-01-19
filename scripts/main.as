@@ -489,3 +489,5 @@ bool g_initStatistics = false;
 array<int> g_achievStats;
 
 bool g_showingXBOMessage = false;
+
+bool g_hasRapidBlows = false; //hack to track rapid blows...

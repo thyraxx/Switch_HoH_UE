@@ -73,7 +73,12 @@ class TransformWidget : Widget
 	{
 %if TARGET_XB1
 		float overscan = GetVarFloat("ui_overscan");
-		if(m_parent !is null && (m_parent.overscanMove.x != 0 || m_parent.overscanMove.y != 0))
+		if(is_chat)
+		{
+			overscanMove.x = 0;
+			overscanMove.y = 0;
+		}
+		else if(m_parent !is null && (m_parent.overscanMove.x != 0 || m_parent.overscanMove.y != 0))
 		{
 			overscanMove = m_parent.overscanMove;
 		}

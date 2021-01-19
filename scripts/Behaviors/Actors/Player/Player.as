@@ -1505,18 +1505,20 @@ class Player : PlayerBase
 
 		if (!force)
 		{
-			if (distsq(m_lastSentPos, pos) > 1 || distsq(m_lastSentDir, dir) > 0.01)
+			if (distsq(m_lastSentPos, pos) > 1.5 || distsq(m_lastSentDir, dir) > 0.1)
 			{
 				m_lastSentPos = pos;
 				m_lastSentDir = dir;
-				(Network::Message("PlayerMove") << pos << dir).SendToAll();
+				//(Network::Message("PlayerMove") << pos << dir).SendToAll();
+				Network::SendPlayerPosMessage(pos, dir);
 			}
 		}
 		else
 		{
 			m_lastSentPos = pos;
 			m_lastSentDir = dir;
-			(Network::Message("PlayerMoveForce") << pos << dir).SendToAll();
+			//(Network::Message("PlayerMoveForce") << pos << dir).SendToAll();
+			Network::SendPlayerPosMessage(pos, dir);
 		}
 	}
 }

@@ -18,7 +18,10 @@ namespace Menu
 
 			@m_wTransform = cast<TransformWidget>(m_widget.GetWidgetById("transform"));
 			@m_wGameChat = cast<GameChatWidget>(m_widget.GetWidgetById("gamechat"));
-
+%if TARGET_XB1 || TARGET_PS4	
+			m_wTransform.is_chat = true;
+			m_wGameChat.is_chat = true;
+%endif
 			m_active = Lobby::IsInLobby();
 			if (m_active)
 			{

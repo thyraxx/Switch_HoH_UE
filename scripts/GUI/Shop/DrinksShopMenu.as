@@ -48,6 +48,8 @@ class DrinksMenuContent : ShopMenuContent
 		m_wList.PauseScrolling();
 		m_wList.ClearChildren();
 
+		Widget@ hoverItem = null;
+
 		for (uint i = 0; i < g_tavernDrinks.length(); i++)
 		{
 			auto drink = g_tavernDrinks[i];
@@ -151,13 +153,16 @@ class DrinksMenuContent : ShopMenuContent
 					wNewItem.AddTooltipSub(m_def.GetSprite("icon-gold"), formatThousands(drink.cost));
 
 				m_wList.AddChild(wNewItem);
-				if(m_lastPurchasedDrink !is null && drink is m_lastPurchasedDrink) wNewItem.SetHovering(true, wNewItem.GetCenter());
+				if(m_lastPurchasedDrink !is null && drink is m_lastPurchasedDrink) 
+					@hoverItem = wNewItem;
 			}
 		}
 
 		m_wList.ResumeScrolling();
 
 		m_shopMenu.DoLayout();
+
+		if(hoverItem !is null) hoverItem.SetHovering(true, hoverItem.GetCenter());
 	}
 
 	void OnFunc(Widget@ sender, string name) override

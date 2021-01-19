@@ -156,6 +156,7 @@ class Widget
 %if TARGET_XB1
 	vec2 overscanMove = vec2();
 	vec2 overscanMoveForced = vec2();
+	bool is_chat = false;
 %endif
 	Widget()
 	{
@@ -539,6 +540,11 @@ class Widget
 		else if(m_parent !is null && (m_parent.overscanMove.x != 0 || m_parent.overscanMove.y != 0))
 		{
 			overscanMove = m_parent.overscanMove;
+			if(is_chat)
+			{
+				overscanMove.x *= -0.6;
+				overscanMove.y *= 0;
+			}
 		}
 		else
 		{

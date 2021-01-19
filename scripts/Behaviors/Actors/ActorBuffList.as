@@ -47,6 +47,9 @@ class ActorBuffList
 			g_scene.SendUnitBuffed(m_actor.m_unit, owner, buff.m_def.m_pathHash, buff.m_intensity, buff.m_weaponInfo, buff.m_duration);
 		}
 	
+		if(buff.m_def !is null && buff.m_def.m_name == ".buff.attackspeed.name")
+			g_hasRapidBlows = true;
+
 		for (uint i = 0; i < m_buffs.length(); i++)
 		{
 			if (m_buffs[i].m_def is buff.m_def)
@@ -174,6 +177,9 @@ class ActorBuffList
 				if (m_buffs.length() == 0)
 					break;
 			
+				if(m_buffs[i].m_def !is null && m_buffs[i].m_def.m_name == ".buff.attackspeed.name")
+					g_hasRapidBlows = false;
+
 				m_buffs[i].Clear();
 				m_buffs.removeAt(i);
 				

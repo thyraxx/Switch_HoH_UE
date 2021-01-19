@@ -210,7 +210,7 @@ class HUDCoop : IWidgetHoster
 	{
 		if (!ShouldShow())
 			return;
-%if TARGET_XB1
+%if TARGET_XB1 || TARGET_PS4
 		auto wHealth = GetHUD().m_wHealthGui;
 		if(wHealth !is null)
 		{
